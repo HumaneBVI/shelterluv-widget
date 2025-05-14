@@ -1,0 +1,79 @@
+
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset='UTF-8'>
+  <title>Horizontal Scroll Widget</title>
+  <style>
+    body {
+      margin: 0;
+      padding: 0;
+      overflow-x: auto;
+      overflow-y: hidden;
+      white-space: nowrap;
+    }
+    #shelterluv_wrap_1736349419 {
+      display: inline-flex;
+      flex-wrap: nowrap;
+      gap: 15px;
+      scroll-behavior: smooth;
+    }
+    .shelterluv-pet {
+      width: 150px !important;
+      height: auto !important;
+      flex: 0 0 auto;
+    }
+    .shelterluv-pet img {
+      max-width: 100% !important;
+      height: auto !important;
+      object-fit: cover;
+    }
+
+    /* Scrollbar Styling */
+    body::-webkit-scrollbar {
+      height: 8px;
+    }
+    body::-webkit-scrollbar-thumb {
+      background: #888;
+      border-radius: 4px;
+    }
+    body::-webkit-scrollbar-thumb:hover {
+      background: #555;
+    }
+  </style>
+</head>
+<body>
+  <div id='shelterluv_wrap_1736349419'></div>
+
+  <script src='https://new.shelterluv.com/misc/shelterluv_embed.js'></script>
+  <script>
+    const sourceDomain = 'https://new.shelterluv.com';
+    const base_path = '';
+    const GID = 16360;
+    const filters = { saved_query: 7604 };
+    
+    // Initialize the widget
+    EmbedAvailablePets('shelterluv_wrap_1736349419', GID, filters, 1, sourceDomain, base_path, 2);
+
+    // Force horizontal display after render
+    const observer = new MutationObserver(() => {
+      const petList = document.querySelector('.shelterluv-pet-list');
+      if (petList) {
+        petList.style.display = 'flex';
+        petList.style.flexWrap = 'nowrap';
+        petList.style.overflowX = 'auto';
+        petList.style.overflowY = 'hidden';
+        petList.querySelectorAll('.shelterluv-pet').forEach((pet) => {
+          pet.style.flex = '0 0 auto';
+        });
+        observer.disconnect();
+      }
+    });
+
+    observer.observe(document.body, {
+      childList: true,
+      subtree: true,
+    });
+  </script>
+</body>
+</html>
